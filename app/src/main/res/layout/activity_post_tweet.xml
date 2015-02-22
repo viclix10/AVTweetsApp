@@ -75,9 +75,11 @@
         android:paddingRight="5sp"
         android:textSize="10sp"
         android:id="@+id/tvTweets"
+        android:textColor="@color/TweeterBlue"
         android:layout_below="@+id/tvUserHandle"
         android:layout_alignLeft="@+id/tvUserHandle"
-        android:layout_alignStart="@+id/tvUserHandle" />
+        android:layout_alignStart="@+id/tvUserHandle"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -85,22 +87,40 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/tvFollowing"
+        android:textColor="@color/TweeterBlue"
         android:paddingRight="5sp"
         android:textSize="10sp"
         android:layout_alignTop="@+id/tvTweets"
         android:layout_toRightOf="@+id/tvTweets"
-        android:layout_toEndOf="@+id/tvTweets" />
+        android:layout_toEndOf="@+id/tvTweets"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
+        android:textColor="@color/TweeterBlue"
         android:id="@+id/tvFollowers"
         android:paddingRight="5sp"
         android:textSize="10sp"
         android:layout_below="@+id/tvUserHandle"
         android:layout_toRightOf="@+id/tvFollowing"
-        android:layout_toEndOf="@+id/tvFollowing" />
+        android:layout_toEndOf="@+id/tvFollowing"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCharCount"
+        android:paddingRight="5sp"
+        android:textSize="10sp"
+        android:layout_below="@+id/etBody"
+        android:textColor="@color/TweeterBlue"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/etBody"
+        android:layout_alignEnd="@+id/etBody"
+        android:text="@string/MaxMessageSpace" />
 
 </RelativeLayout>

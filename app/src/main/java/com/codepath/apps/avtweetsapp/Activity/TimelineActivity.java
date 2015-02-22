@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 
 public class TimelineActivity extends ActionBarActivity {
 
+    private SwipeRefreshLayout swipeContainer;
     private TwitterClient client;
     private TweetsArrayAdapter aTweets;
     private ArrayList<Tweet> tweets;
@@ -58,12 +60,36 @@ public class TimelineActivity extends ActionBarActivity {
         getUserDetails();
 
         customLoadMoreDataFromApi(0);
+
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                //fetchTimelineAsync(0);
+                customLoadMoreDataFromApi(0);
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
     }
 
     private static final int numberOfResults = 64;
 
     // Append more data into the adapter
     private void customLoadMoreDataFromApi(int offset) {
+
+        if (offset == 0 ) {
+            aTweets.clear();
+        }
         offset += 1;
 
         Toast.makeText(this, "Loading Tweets #"+offset, Toast.LENGTH_SHORT).show();
@@ -76,8 +102,6 @@ public class TimelineActivity extends ActionBarActivity {
         client.getUserDetails(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
-                Log.i("getUserDetails", json.toString());
-
                 currentUser = CurrentUser.fromJSON(json);
             }
 

@@ -2,6 +2,8 @@ package com.codepath.apps.avtweetsapp.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +36,22 @@ public class PostTweetActivity extends ActionBarActivity {
     TextView tvTweets;
     EditText body;
 
+    private TextView mTextView;
+/*    private final TextWatcher mTextEditorWatcher = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            int charLeft = 140;
+            if (s.length() >= 140) { charLeft = 0; }
+            else { charLeft -= s.length();}
+            mTextView.setText("Space Left:"+String.valueOf(charLeft));
+        }
+
+        public void afterTextChanged(Editable s) {
+        }
+    };*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +65,25 @@ public class PostTweetActivity extends ActionBarActivity {
         tvFollowers = (TextView) findViewById(R.id.tvFollowers);
         tvFollowing = (TextView) findViewById(R.id.tvFollowing);
         tvTweets = (TextView) findViewById(R.id.tvTweets);
+        mTextView = (TextView)findViewById(R.id.tvCharCount);
+
         body = (EditText) findViewById(R.id.etBody);
+        body.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int charLeft = 140;
+                if (s.length() >= 140) { charLeft = 0; mTextView.setTextColor(R.color.TweeterRed);}
+                else { charLeft -= s.length(); mTextView.setTextColor(R.color.TweeterBlue);}
+
+                mTextView.setText("MaxMessageSpace: "+String.valueOf(charLeft));
+
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         profileImg.setImageResource(android.R.color.transparent);
         Picasso.with(this).load(currentUser.getProfile_image_url()).into(profileImg);
@@ -58,6 +94,11 @@ public class PostTweetActivity extends ActionBarActivity {
         tvFollowing.setText("Favourites: " + currentUser.getFavourites_count());
         tvTweets.setText("Tweets: " + currentUser.getStatuses_count());
     }
+
+
+
+
+
 
 
     @Override

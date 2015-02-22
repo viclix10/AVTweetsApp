@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="TweeterBlue">#ff0c8dff</color>
+    <color name="TweeterRed">#fffe0000</color>
+
 </resources>
