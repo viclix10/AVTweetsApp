@@ -3,32 +3,82 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:src="@drawable/ic_launcher"
         android:id="@+id/ivProfileImg"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:padding="10dp"
-        android:layout_marginRight="5dp" />
+        android:layout_marginRight="5dp"
+        android:scaleType="fitXY"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:hint="user"
+        android:drawableLeft="@drawable/ic_bird_small"
+        android:textStyle="bold"
         android:id="@+id/tvUsername"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivProfileImg"
-        android:layout_toEndOf="@+id/ivProfileImg" />
+        android:layout_toEndOf="@+id/ivProfileImg"
+        android:paddingRight="5sp"
+        android:textSize="10sp"
+        android:ellipsize="end"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_light"
+        android:gravity="center_vertical" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/tvBody"
-        android:layout_alignBottom="@+id/ivProfileImg"
-        android:layout_toRightOf="@+id/ivProfileImg"
-        android:layout_toEndOf="@+id/ivProfileImg" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="\@handle"
+        android:id="@+id/tvUserHandle"
+        android:layout_toRightOf="@+id/tvUsername"
+        android:layout_alignParentTop="true"
+        android:paddingRight="5sp"
+        android:autoLink="all"
+        android:linksClickable="true"
+        android:textSize="8sp"
+        android:layout_alignBottom="@+id/tvUsername"
+        android:gravity="center_vertical" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="time"
+        android:id="@+id/tvCreatedat"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tvUserHandle"
+        android:layout_toEndOf="@+id/tvUserHandle"
+        android:paddingRight="5sp"
+        android:textSize="8sp"
+        android:layout_alignBottom="@+id/tvUserHandle"
+        android:gravity="center_vertical|right"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="twit"
+        android:id="@+id/tvBody"
+        android:autoLink="all"
+        android:linksClickable="true"
+        android:textSize="12sp"
+        android:autoText="true"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/tvUsername"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/ivProfileImg"
+        android:layout_toEndOf="@+id/ivProfileImg"
+        android:layout_alignBottom="@+id/ivProfileImg" />
 </RelativeLayout>

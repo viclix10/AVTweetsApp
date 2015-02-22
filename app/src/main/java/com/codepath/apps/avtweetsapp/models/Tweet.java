@@ -1,11 +1,102 @@
 package com.codepath.apps.avtweetsapp.models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+@Table(name = "Tweets")
+public class Tweet extends Model {
+
+    @Column(name = "body")
+    private String body;
+
+    @Column(name = "uid")
+    private long uid;
+
+    @Column(name = "User", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    private User user;
+
+    @Column(name = "createdAt")
+    private String createdAt;
+
+    public Tweet()
+    {
+        super();
+    }
+
+    public static Tweet fromJson(JSONObject jsonObject)
+    {
+        Tweet tweet = new Tweet();
+        try {
+            tweet.body = jsonObject.getString("text");
+            tweet.uid = jsonObject.getLong("id");
+            tweet.createdAt = jsonObject.getString("created_at");
+            tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return tweet;
+    }
+
+    public static ArrayList<Tweet> fromJsonArray(JSONArray jsonArray) {
+        ArrayList<Tweet> tweets = new ArrayList<>();
+        for (int i = 0; i< jsonArray.length(); i++) {
+
+            try {
+                JSONObject tweetJson = jsonArray.getJSONObject(i);
+                Tweet tweet = Tweet.fromJson(tweetJson);
+                if (tweet != null) {
+                    tweet.save();
+                    tweets.add(tweet);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                continue;
+            }
+        }
+
+        return  tweets;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public long getUid() {
+        return uid;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+}
 /*
 [
 
@@ -208,76 +299,6 @@ import java.util.ArrayList;
     "in_reply_to_status_id": null
   }
 ]
+[{"created_at":"Sun Feb 22 02:59:55 +0000 2015","id":569330718586703872,"id_str":"569330718586703872","text":"Are on-demand services distracting us from real world interaction? http:\/\/t.co\/TvcLwYNn0z","source":"<a href=\"http:\/\/twitter.com\" rel=\"nofollow\">Twitter Web Client<\/a>","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":9466132,"id_str":"9466132","name":"vedamber","screen_name":"vedamber","location":"San Jose, CA","profile_location":null,"description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":11,"friends_count":21,"listed_count":0,"created_at":"Mon Oct 15 23:54:39 +0000 2007","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":20,"lang":"en","contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"131516","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme14\/bg.gif","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme14\/bg.gif","profile_background_tile":true,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/3388866742\/a7fdcc1556294f02df3080eaab1da062_normal.jpeg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/3388866742\/a7fdcc1556294f02df3080eaab1da062_normal.jpeg","profile_link_color":"009999","profile_sidebar_border_color":"EEEEEE","profile_sidebar_fill_color":"EFEFEF","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[{"url":"http:\/\/t.co\/TvcLwYNn0z","expanded_url":"http:\/\/bit.ly\/1AfNKOQ","display_url":"bit.ly\/1AfNKOQ","indices":[67,89]}]},"favorited":false,"retweeted":false,"possibly_sensitive":false,"lang":"en"},{"created_at":"Sun Feb 22 00:22:43 +0000 2015","id":569291157026394112,"id_str":"569291157026394112","text":"Testing Twitter App 20","source":"<a href=\"http:\/\/twitter.com\" rel=\"nofollow\">Twitter Web Client<\/a>","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":9466132,"id_str":"9466132","name":"vedamber","screen_name":"vedamber","location":"San Jose, CA","profile_location":null,"description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":11,"friends_count":21,"listed_count":0,"created_at":"Mon Oct 15 23:54:39 +0000 2007","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":20,"lang":"en","contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"131516","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme14\/bg.gif","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme14\/bg.gif","profile_background_tile":true,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/3388866742\/a7fdcc1556294f02df3080eaab1da062_normal.jpeg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/3388866742\/a7fdcc1556294f02df3080eaab1da062_normal.jpeg","profile_link_color":"009999","profile_sidebar_border_color":"EEEEEE","profile_sidebar_fill_color":"EFEFEF","profile_text_color":"333333","profile_use_background_image":true,"default_profile":false,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"favorited":false,"retweete
+
 */
-public class Tweet {
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public long getUid() {
-        return uid;
-    }
-
-    public void setUid(long uid) {
-        this.uid = uid;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    private String body;
-    private long uid;
-    private User user;
-    private String createdAt;
-
-
-    public static Tweet fromJson(JSONObject jsonObject) {
-        Tweet tweet = new Tweet();
-        try {
-            tweet.body = jsonObject.getString("text");
-            tweet.uid = jsonObject.getLong("id");
-            tweet.createdAt = jsonObject.getString("created_at");
-            tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return tweet;
-    }
-
-    public static ArrayList<Tweet> fromJsonArray(JSONArray jsonArray) {
-        ArrayList<Tweet> tweets = new ArrayList<>();
-        for (int i = 0; i< jsonArray.length(); i++) {
-            try {
-                JSONObject tweetJson = jsonArray.getJSONObject(i);
-                Tweet tweet = Tweet.fromJson(tweetJson);
-                if (tweet != null) {
-                    tweets.add(tweet);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                continue;
-            }
-
-        }
-        return  tweets;
-    }
-}
