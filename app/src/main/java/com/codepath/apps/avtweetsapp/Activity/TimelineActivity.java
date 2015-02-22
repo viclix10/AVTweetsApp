@@ -3,6 +3,7 @@ package com.codepath.apps.avtweetsapp.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.codepath.apps.avtweetsapp.Adapter.TweetsArrayAdapter;
 import com.codepath.apps.avtweetsapp.R;
 import com.codepath.apps.avtweetsapp.TwitterApplication;
 import com.codepath.apps.avtweetsapp.TwitterClient;
+import com.codepath.apps.avtweetsapp.models.CurrentUser;
 import com.codepath.apps.avtweetsapp.models.Tweet;
 import com.codepath.apps.avtweetsapp.utils.EndlessScrollListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -33,6 +35,7 @@ public class TimelineActivity extends ActionBarActivity {
     private TweetsArrayAdapter aTweets;
     private ArrayList<Tweet> tweets;
     private ListView lvTweets;
+    CurrentUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class TimelineActivity extends ActionBarActivity {
         });
 
         client = TwitterApplication.getRestClient();
+        getUserDetails();
+
         customLoadMoreDataFromApi(0);
     }
 
@@ -67,7 +72,21 @@ public class TimelineActivity extends ActionBarActivity {
         populateTimeLine(offset);
     }
 
+    private void getUserDetails() {
+        client.getUserDetails(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
+                Log.i("getUserDetails", json.toString());
 
+                currentUser = CurrentUser.fromJSON(json);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorRespnose) {
+                Log.i("getUserDetails", errorRespnose.toString());
+            }
+        });
+    }
     private void populateTimeLine(int offset) {
         checkForInternetConnectivity();
 
@@ -76,7 +95,6 @@ public class TimelineActivity extends ActionBarActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 ArrayList<Tweet> tweets = Tweet.fromJsonArray(json);
                 aTweets.addAll(tweets);
-
             }
 
             @Override
@@ -100,8 +118,13 @@ public class TimelineActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_create) {
+
+            Intent i = new Intent(this, PostTweetActivity.class);
+            i.putExtra("CurrentUser", currentUser);
+            Toast.makeText(this, "currentUser #"+currentUser.getName(), Toast.LENGTH_SHORT).show();
+            startActivity(i);
+            //startActivityForResult(i, REQUEST_CODE);
             return true;
         }
 

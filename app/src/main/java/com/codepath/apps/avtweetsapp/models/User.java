@@ -1,5 +1,7 @@
 package com.codepath.apps.avtweetsapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.activeandroid.Model;
@@ -10,7 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 @Table(name = "User")
-public class User extends Model {
+public class User extends Model implements Parcelable {
 
     //list att;
     @Column(name = "nameHandle")
@@ -46,6 +48,7 @@ public class User extends Model {
         }
         return u;
     }
+
     public String getNameHandle() {
         return nameHandle;
     }
@@ -85,6 +88,38 @@ public class User extends Model {
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.nameHandle);
+        dest.writeLong(this.uid);
+        dest.writeString(this.url);
+        dest.writeString(this.screenName);
+        dest.writeString(this.profileImageUrl);
+    }
+
+    private User(Parcel in) {
+        this.nameHandle = in.readString();
+        this.uid = in.readLong();
+        this.url = in.readString();
+        this.screenName = in.readString();
+        this.profileImageUrl = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }
 
 /*
@@ -147,4 +182,41 @@ public class User extends Model {
       "show_all_inline_media": false,
       "screen_name": "twitterapi"
     },
+*/
+
+/*
+{
+    "always_use_https": true,
+    "discoverable_by_email": true,
+    "geo_enabled": true,
+    "language": "en",
+    "protected": false,
+    "screen_name": "theSeanCook",
+    "show_all_inline_media": false,
+    "sleep_time": {
+        "enabled": false,
+        "end_time": null,
+        "start_time": null
+    },
+    "time_zone": {
+        "name": "Pacific Time (US & Canada)",
+        "tzinfo_name": "America/Los_Angeles",
+        "utc_offset": -28800
+    },
+    "trend_location": [
+        {
+            "country": "United States",
+            "countryCode": "US",
+            "name": "Atlanta",
+            "parentid": 23424977,
+            "placeType": {
+                "code": 7,
+                "name": "Town"
+            },
+            "url": "http://where.yahooapis.com/v1/place/2357024",
+            "woeid": 2357024
+        }
+    ],
+    "use_cookie_personalization": true
+}
 */

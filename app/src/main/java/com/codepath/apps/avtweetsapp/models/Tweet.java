@@ -1,5 +1,8 @@
 package com.codepath.apps.avtweetsapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -11,7 +14,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 @Table(name = "Tweets")
-public class Tweet extends Model {
+public class Tweet extends Model implements Parcelable {
 
     @Column(name = "body")
     private String body;
@@ -96,6 +99,36 @@ public class Tweet extends Model {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.body);
+        dest.writeLong(this.uid);
+        dest.writeParcelable(this.user, 0);
+        dest.writeString(this.createdAt);
+    }
+
+    private Tweet(Parcel in) {
+        this.body = in.readString();
+        this.uid = in.readLong();
+        this.user = in.readParcelable(User.class.getClassLoader());
+        this.createdAt = in.readString();
+    }
+
+    public static final Creator<Tweet> CREATOR = new Creator<Tweet>() {
+        public Tweet createFromParcel(Parcel source) {
+            return new Tweet(source);
+        }
+
+        public Tweet[] newArray(int size) {
+            return new Tweet[size];
+        }
+    };
 }
 /*
 [

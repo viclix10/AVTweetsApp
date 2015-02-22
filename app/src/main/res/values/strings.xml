@@ -6,6 +6,11 @@
     <string name="title_activity_timeline">Home Timeline</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="action_create">Tweet</string>
+    <string name="title_activity_post_tweet">Tweet</string>
     <string name="action_settings">Settings</string>
+    <string name="action_back">Back</string>
+    <string name="SendTweet">Send Tweet</string>
+
 
 </resources>

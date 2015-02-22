@@ -9,15 +9,16 @@
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <android:uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
 
     <application
-        android:name="com.codepath.apps.avtweetsapp.TwitterApplication"
+        android:name=".TwitterApplication"
         android:allowBackup="true"
         android:icon="@drawable/twitter_logo_blue"
         android:label="@string/app_name"
@@ -41,7 +42,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />ic_bird_small.png
+                <category android:name="android.intent.category.DEFAULT" />
+ic_bird_small.png
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
@@ -52,6 +54,10 @@
         <activity
             android:name=".Activity.TimelineActivity"
             android:label="@string/title_activity_timeline" >
+        </activity>
+        <activity
+            android:name=".Activity.PostTweetActivity"
+            android:label="@string/SendTweet" >
         </activity>
     </application>
 
