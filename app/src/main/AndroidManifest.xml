@@ -4,18 +4,14 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="21" />
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
 
     <application
         android:name=".TwitterApplication"
@@ -36,16 +32,12 @@
             android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-ic_bird_small.png
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
                     android:host="avtweetsapp"
                     android:scheme="oauth" />
@@ -53,11 +45,13 @@ ic_bird_small.png
         </activity>
         <activity
             android:name=".Activity.TimelineActivity"
-            android:label="@string/title_activity_timeline" >
+            android:label="@string/title_activity_timeline"
+            android:icon="@drawable/ic_launcher">
         </activity>
         <activity
             android:name=".Activity.PostTweetActivity"
-            android:label="@string/SendTweet" >
+            android:label="@string/SendTweet"
+            android:icon="@drawable/tweet32_32">
         </activity>
     </application>
 

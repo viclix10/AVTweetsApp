@@ -82,7 +82,7 @@ public class TimelineActivity extends ActionBarActivity {
 
     }
 
-    private static final int numberOfResults = 64;
+    private static final int numberOfResults = 1200;
 
     // Append more data into the adapter
     private void customLoadMoreDataFromApi(int offset) {
@@ -99,6 +99,10 @@ public class TimelineActivity extends ActionBarActivity {
     }
 
     private void getUserDetails() {
+        if (!checkForInternetConnectivity()) {
+            return;
+        }
+
         client.getUserDetails(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
@@ -112,7 +116,9 @@ public class TimelineActivity extends ActionBarActivity {
         });
     }
     private void populateTimeLine(int offset) {
-        checkForInternetConnectivity();
+        if (!checkForInternetConnectivity()) {
+            return;
+        }
 
         client.getHomeTimeLine(offset, new JsonHttpResponseHandler() {
             @Override
@@ -143,27 +149,30 @@ public class TimelineActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_create) {
-
-            Intent i = new Intent(this, PostTweetActivity.class);
-            i.putExtra("CurrentUser", currentUser);
-            Toast.makeText(this, "currentUser #"+currentUser.getName(), Toast.LENGTH_SHORT).show();
-            startActivity(i);
-            //startActivityForResult(i, REQUEST_CODE);
+            if (currentUser != null) {
+                Intent i = new Intent(this, PostTweetActivity.class);
+                i.putExtra("CurrentUser", currentUser);
+                Toast.makeText(this, "currentUser #" + currentUser.getName(), Toast.LENGTH_SHORT).show();
+                startActivity(i);
+                //startActivityForResult(i, REQUEST_CODE);
+            }
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private Boolean isNetworkAvailable() {
+    private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+        return (activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting());
     }
 
-    private void checkForInternetConnectivity() {
-        if (!isNetworkAvailable()) {
+    private boolean checkForInternetConnectivity() {
+        boolean networkAval = isNetworkAvailable();
+
+        if (!networkAval) {
             AlertDialog alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setTitle("Alert");
             alertDialog.setMessage("Unable to connect to the internet.  Please try again later.");
@@ -175,5 +184,6 @@ public class TimelineActivity extends ActionBarActivity {
                     });
             alertDialog.show();
         }
+        return networkAval;
     }
 }

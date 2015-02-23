@@ -3,68 +3,46 @@ package com.codepath.apps.avtweetsapp.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by amber_ved on 2/22/15.
- */
+@Table(name = "CurrentUser")
 public class CurrentUser implements Parcelable {
 
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public long getFavourites_count() {
-        return favourites_count;
-    }
-
-    public long getFollowers_count() {
-        return followers_count;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getProfile_image_url() {
-        return profile_image_url;
-    }
-
-    public String getProfile_background_image_url() {
-        return profile_background_image_url;
-    }
-
-    public String getScreen_name() {
-        return screen_name;
-    }
-
-    public long getStatuses_count() {
-        return statuses_count;
-    }
-
+    @Column(name = "created_at")
     private String created_at;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "favourites_count")
     private long favourites_count;
+
+    @Column(name = "followers_count")
     private long followers_count;
+
+    @Column(name = "id")
     private long id;
+
+    @Column(name = "location")
     private String location;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "profile_image_url")
     private String profile_image_url;
+
+    @Column(name = "profile_background_image_url")
     private String profile_background_image_url;
+
+    @Column(name = "screen_name")
     private String  screen_name;
+
+    @Column(name = "statuses_count")
     private long statuses_count;
 
     public static CurrentUser fromJSON(JSONObject json) {
@@ -134,6 +112,50 @@ public class CurrentUser implements Parcelable {
             return new CurrentUser[size];
         }
     };
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public long getFavourites_count() {
+        return favourites_count;
+    }
+
+    public long getFollowers_count() {
+        return followers_count;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getProfile_image_url() {
+        return profile_image_url;
+    }
+
+    public String getProfile_background_image_url() {
+        return profile_background_image_url;
+    }
+
+    public String getScreen_name() {
+        return screen_name;
+    }
+
+    public long getStatuses_count() {
+        return statuses_count;
+    }
 }
 
 /*

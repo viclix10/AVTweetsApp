@@ -1,5 +1,10 @@
 package com.codepath.apps.avtweetsapp.Activity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -10,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.avtweetsapp.R;
 import com.codepath.apps.avtweetsapp.TwitterApplication;
@@ -121,7 +127,9 @@ public class PostTweetActivity extends ActionBarActivity {
             this.finish();
             return true;
         } else if (id == R.id.action_create) {
-            //checkForInternetConnectivity();
+            if (!checkForInternetConnectivity()) {
+                return true;
+            }
 
             client = TwitterApplication.getRestClient();
             String tweetBody = body.getText().toString();
@@ -137,9 +145,35 @@ public class PostTweetActivity extends ActionBarActivity {
                     Log.i("postTweet.onFailure", errorRespnose.toString());
                 }
             });
+            Toast.makeText(this, "Tweet Posted.", Toast.LENGTH_SHORT).show();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return (activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting());
+    }
+
+    private boolean checkForInternetConnectivity() {
+        boolean networkAval = isNetworkAvailable();
+
+        if (!networkAval) {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("Alert");
+            alertDialog.setMessage("Unable to connect to the internet.  Please try again later.");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+        return networkAval;
     }
 }

@@ -21,7 +21,7 @@ public class TwitterClient extends OAuthBaseClient {
 	}
 
     public void getHomeTimeLine(int offset, AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        String apiUrl = getApiUrl("statuses/home_timeline.json");
         RequestParams params = new RequestParams();
         params.put("since_id", offset*10);
         params.put("count", (offset*10)+10);
