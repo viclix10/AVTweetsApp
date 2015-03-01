@@ -4,8 +4,15 @@
     tools:context="com.codepath.apps.avtweetsapp.Activity.TimelineActivity">
     <item android:id="@+id/action_create"
         android:title="@string/action_create"
-        android:orderInCategory="100"
-        android:icon="@drawable/tweet72_72"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_bird_small"
         app:showAsAction="ifRoom"
         />
+    <item android:id="@+id/action_notification"
+        android:title="@string/action_notification"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_notifications"
+        app:showAsAction="ifRoom"
+        />
+
 </menu>

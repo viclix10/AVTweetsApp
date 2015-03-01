@@ -12,6 +12,7 @@
     <string name="action_back">Back</string>
     <string name="SendTweet">Send Tweet</string>
     <string name="MaxMessageSpace">MaxMessageSpace: 140</string>
+    <string name="action_notification">Notification</string>
 
 
 </resources>

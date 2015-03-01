@@ -46,12 +46,12 @@
         <activity
             android:name=".Activity.TimelineActivity"
             android:label="@string/title_activity_timeline"
-            android:icon="@drawable/ic_launcher">
+            android:icon="@drawable/ic_bird_small">
         </activity>
         <activity
             android:name=".Activity.PostTweetActivity"
             android:label="@string/SendTweet"
-            android:icon="@drawable/tweet32_32">
+            android:icon="@drawable/ic_bird_small">
         </activity>
     </application>
 
