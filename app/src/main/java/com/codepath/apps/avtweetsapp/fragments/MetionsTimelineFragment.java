@@ -14,54 +14,28 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MetionsTimelineFragment extends TweetsListFragment {
-
-
     private TwitterClient client;
-    private static final int numberOfResults = 1200;
-
-    public MetionsTimelineFragment() {
-        super();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = TwitterApplication.getRestClient();
-        customLoadMoreDataFromApi(0);
-    }
-
-    // Append more data into the adapter
-    private void customLoadMoreDataFromApi(int offset) {
-
-        if (offset == 0 ) {
-            clear();
-        }
-        offset += 1;
-
-        if (offset > numberOfResults) return;
-        populateTimeLine(offset);
     }
 
     void populateTimeLine(int offset) {
-
-        Log.i("MetionsTimelineFragment","populateTimeLine");
-
         client.getMetionsTimeLine(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                Log.i(".onSuccess", json.toString());
+                Log.i("MetionsTimelineFragment", "onSuccess");
+                Log.i("MetionsTimelineFragment", json.toString());
                 addAll(Tweet.fromJsonArray(json));
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorRespnose) {
-                Log.i(".onFailure", errorRespnose.toString());
+                Log.i("MetionsTimelineFragment", "onFailure");
+                Log.i("MetionsTimelineFragment", errorRespnose.toString());
             }
         });
-    }
-
-    boolean checkForInternetConnectivity()
-    {
-        return false;
     }
 }

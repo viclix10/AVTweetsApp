@@ -33,6 +33,12 @@ public abstract class TweetsListFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tweets_list, parent, false);
 
         lvTweets = (ListView) v.findViewById(R.id.lvTweets);
+        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                customLoadMoreDataFromApi(page);
+            }
+        });
 
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -50,12 +56,6 @@ public abstract class TweetsListFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                customLoadMoreDataFromApi(page);
-            }
-        });
 
         return v;
     }
@@ -66,7 +66,7 @@ public abstract class TweetsListFragment extends Fragment {
     private void customLoadMoreDataFromApi(int offset) {
 
         if (offset == 0 ) {
-            clear();
+            aTweets.clear();
         }
         offset += 1;
 
@@ -78,10 +78,6 @@ public abstract class TweetsListFragment extends Fragment {
 
     public void addAll(List<Tweet> tweets) {
         aTweets.addAll(tweets);
-    }
-
-    public void clear() {
-        aTweets.clear();
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.codepath.apps.avtweetsapp.TwitterApplication;
 import com.codepath.apps.avtweetsapp.TwitterClient;
-import com.codepath.apps.avtweetsapp.models.CurrentUser;
 import com.codepath.apps.avtweetsapp.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -17,26 +16,14 @@ public class HomeTimelineFragment extends TweetsListFragment {
 
     private TwitterClient client;
 
-    public HomeTimelineFragment() {
-        super();
-    }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.i("HomeTimelineFragment", "Done");
-
         client = TwitterApplication.getRestClient();
-        populateTimeLine(0);
-        getUserDetails();
-
+        //getUserDetails();
     }
 
     void populateTimeLine(int offset) {
-
-        Log.i("HomeTimelineFragment","populateTimeLine");
 
         //if (!checkForInternetConnectivity()) {
         //    return;
@@ -45,20 +32,17 @@ public class HomeTimelineFragment extends TweetsListFragment {
         client.getHomeTimeLine(offset, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                Log.i(".onSuccess", json.toString());
+                Log.i("HomeTimelineFragment", "onSuccess");
+                Log.i("HomeTimelineFragment", json.toString());
                 addAll(Tweet.fromJsonArray(json));
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorRespnose) {
-                Log.i(".onFailure", errorRespnose.toString());
+                Log.i("HomeTimelineFragment", "onFailure");
+                Log.i("HomeTimelineFragment", errorRespnose.toString());
             }
         });
-    }
-
-    boolean checkForInternetConnectivity()
-    {
-        return false;
     }
 
     /*
@@ -86,7 +70,6 @@ public class HomeTimelineFragment extends TweetsListFragment {
         }
         return networkAval;
     }
-    */
 
     CurrentUser currentUser;
     private void getUserDetails() {
@@ -106,5 +89,5 @@ public class HomeTimelineFragment extends TweetsListFragment {
             }
         });
     }
-
+*/
 }
