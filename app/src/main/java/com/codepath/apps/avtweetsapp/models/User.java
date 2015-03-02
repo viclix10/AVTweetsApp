@@ -2,7 +2,6 @@ package com.codepath.apps.avtweetsapp.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -30,23 +29,72 @@ public class User extends Model implements Parcelable {
     @Column(name = "profileImageUrl")
     private String profileImageUrl;
 
+
+    @Column(name = "profile_image")
+    public String profileImage;
+
+    @Column(name = "tag_line")
+    public String tagLine;
+
+    @Column(name = "followers")
+    public int followers;
+
+    @Column(name = "following")
+    public int following;
+
+    @Column(name = "tweets")
+    public int tweets;
+
+    @Column(name="profile_banner_url")
+    public String profileBannerUrl;
+
     public User(){
         super();
     }
 
     public static User fromJSON(JSONObject json) {
-        User u = new User();
+
         try {
+            User u = new User();
             u.nameHandle = json.getString("name");
             u.url = json.getString("url");
-            Log.d("TweeterUrl", u.url);
             u.uid = json.getLong("id");
             u.screenName = json.getString("screen_name");
             u.profileImageUrl = json.getString("profile_image_url");
+            u.tagLine = json.getString("description");
+            u.followers = json.getInt("followers_count");
+            u.following = json.getInt("friends_count");
+            u.tweets = json.getInt("statuses_count");
+            u.profileBannerUrl = json.isNull("profile_banner_url") ? "" : json.getString("profile_banner_url");
+            return u;
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return u;
+        return null;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
+    public int getFollowers() {
+        return followers;
+    }
+
+    public int getFollowing() {
+        return following;
+    }
+
+    public int getTweets() {
+        return tweets;
+    }
+
+    public String getProfileBannerUrl() {
+        return profileBannerUrl;
     }
 
     public String getNameHandle() {
@@ -101,6 +149,12 @@ public class User extends Model implements Parcelable {
         dest.writeString(this.url);
         dest.writeString(this.screenName);
         dest.writeString(this.profileImageUrl);
+        dest.writeString(this.profileImage);
+        dest.writeString(this.tagLine);
+        dest.writeInt(this.followers);
+        dest.writeInt(this.following);
+        dest.writeInt(this.tweets);
+        dest.writeString(this.profileBannerUrl);
     }
 
     private User(Parcel in) {
@@ -109,6 +163,12 @@ public class User extends Model implements Parcelable {
         this.url = in.readString();
         this.screenName = in.readString();
         this.profileImageUrl = in.readString();
+        this.profileImage = in.readString();
+        this.tagLine = in.readString();
+        this.followers = in.readInt();
+        this.following = in.readInt();
+        this.tweets = in.readInt();
+        this.profileBannerUrl = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

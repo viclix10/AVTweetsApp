@@ -6,27 +6,18 @@
     android:theme="@style/CustomActionBarTheme"
     tools:context="com.codepath.apps.avtweetsapp.Activity.TimelineActivity">
 
-<!--
-    <fragment
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:name="com.codepath.apps.avtweetsapp.fragments.MetionTimelineFragment"
-        android:id="@+id/fragment_timeline"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        tools:layout="@layout/fragment_tweets_list"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-    -->
-
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/tabs"
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="true"
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="48dp"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        app:pstsDividerColor="@color/TweeterGreen"
+        app:pstsIndicatorColor="@color/TweeterRed"
+        app:pstsUnderlineColor="@color/TweeterBlue"
+        app:pstsTabPaddingLeftRight="14dp">
     </com.astuetz.PagerSlidingTabStrip>
 
     <android.support.v4.view.ViewPager
@@ -35,7 +26,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white" />
-
-
 
 </RelativeLayout>

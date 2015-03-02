@@ -13,6 +13,13 @@
     <string name="SendTweet">Send Tweet</string>
     <string name="MaxMessageSpace">MaxMessageSpace: 140</string>
     <string name="action_notification">Notification</string>
+    <string name="user_profile">Profile</string>
 
+    <string name="name">Name</string>
+    <string name="tagline">TagLine</string>
+    <string name="tweets">Tweets</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="screenname">ScreenName</string>
 
 </resources>

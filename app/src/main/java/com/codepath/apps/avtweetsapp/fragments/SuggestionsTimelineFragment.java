@@ -1,18 +1,19 @@
 package com.codepath.apps.avtweetsapp.fragments;
 
+
 import android.os.Bundle;
 import android.util.Log;
 
 import com.codepath.apps.avtweetsapp.TwitterApplication;
 import com.codepath.apps.avtweetsapp.TwitterClient;
-import com.codepath.apps.avtweetsapp.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class HomeTimelineFragment extends TweetsListFragment {
+public class SuggestionsTimelineFragment extends TweetsListFragment {
+    private static final String TAG = SuggestionsTimelineFragment.class.getSimpleName();
 
     private TwitterClient client;
 
@@ -23,23 +24,18 @@ public class HomeTimelineFragment extends TweetsListFragment {
     }
 
     void populateTimeLine(int offset) {
-
-        //if (!checkForInternetConnectivity()) {
-        //    return;
-        //}
-
-        client.getHomeTimeLine(offset, new JsonHttpResponseHandler() {
+        client.getSuggestionsTimeLine(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                Log.i("HomeTimelineFragment", "onSuccess");
-                Log.i("HomeTimelineFragment", json.toString());
-                addAll(Tweet.fromJsonArray(json));
+                Log.i(TAG, "onSuccess");
+                Log.i(TAG, json.toString());
+                //addAll(Tweet.fromJsonArray(json));
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorRespnose) {
-                Log.i("HomeTimelineFragment", "onFailure");
-                Log.i("HomeTimelineFragment", errorRespnose.toString());
+                Log.i(TAG, "onFailure");
+                Log.i(TAG, errorRespnose.toString());
             }
         });
     }

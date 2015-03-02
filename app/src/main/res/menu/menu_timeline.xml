@@ -2,17 +2,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.codepath.apps.avtweetsapp.Activity.TimelineActivity">
+
     <item android:id="@+id/action_create"
         android:title="@string/action_create"
         android:orderInCategory="1"
-        android:icon="@drawable/ic_bird_small"
+        android:icon="@mipmap/ic_tweet"
         app:showAsAction="ifRoom"
         />
+
+    <item android:id="@+id/show_profile"
+        android:title="@string/user_profile"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_profile"
+        app:showAsAction="ifRoom"
+        android:onClick="onProfileView"
+        />
+
     <item android:id="@+id/action_notification"
         android:title="@string/action_notification"
-        android:orderInCategory="2"
+        android:orderInCategory="1"
         android:icon="@drawable/ic_notifications"
         app:showAsAction="ifRoom"
         />
+
 
 </menu>

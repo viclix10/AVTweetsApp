@@ -2,6 +2,7 @@ package com.codepath.apps.avtweetsapp.Adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.codepath.apps.avtweetsapp.Activity.ProfileActivity;
 import com.codepath.apps.avtweetsapp.R;
 import com.codepath.apps.avtweetsapp.models.Tweet;
 import com.squareup.picasso.Picasso;
@@ -35,7 +38,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Tweet tweet = getItem(position);
+        final Tweet tweet = getItem(position);
         ViewHolder viewHolder;
 
         if (convertView == null) {
@@ -60,10 +63,17 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         viewHolder.profileImg.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(viewHolder.profileImg);
 
+        viewHolder.profileImg.setOnClickListener(new View.OnClickListener() {
+            String username = tweet.getUser().getScreenName();
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "onClickImg"+username, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra("screenname", username);
+                getContext().startActivity(i);
+            }
+        });
         return convertView;
     }
-
-
 
     public String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
