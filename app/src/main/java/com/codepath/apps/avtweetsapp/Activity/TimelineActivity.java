@@ -37,7 +37,7 @@ public class TimelineActivity extends ActionBarActivity {
         // ActionBar configuration
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.drawable.);
+        actionBar.setIcon(R.drawable.twitter);
         actionBar.setDisplayShowTitleEnabled(false);
 
         getCurrentUser();
